@@ -34,11 +34,12 @@
               
                   <!-- Navigation -->
                   <ul class="nav nav-links gap-4">
-                    <li><a href="#" class="nav-link">Search Data</a></li>
-                    <li><a href="#" class="nav-link">Index Leaks</a></li>
-                    <li><a href="#" class="nav-link">Business Dashboard</a></li>
-                    <li><a href="#" class="nav-link">Terms of Use</a></li>
-                    <li><a href="#" class="nav-link">Legal</a></li>
+                    <li><a href="#" class="nav-link"> <img src="./assets/images/search.png" class="navIcon"> Search Data</a></li>
+                    <li><a href="#" class="nav-link"><img src="./assets/images/indexed.png" class="navIcon"> Indexed Leaks</a></li>
+                    <li><a href="#" class="nav-link"><img src="./assets/images/business.png" class="navIcon one"> Business Dashboard</a></li>
+                    <li><a href="#" class="nav-link"><img src="./assets/images/terms.png" class="navIcon one"> Terms of Use</a></li>
+                    <li><a href="#" class="nav-link"><img src="./assets/images/legal.png" class="navIcon one"> Legal</a></li>
+                    <li><a href="#" class="nav-link"><img src="./assets/images/donate.png" class="navIcon"> Donate</a></li>
                   </ul>
               
                 </div>
@@ -49,35 +50,37 @@
           <div class="body-container p-4 md:p-8 flex flex-col items-center">
             <div>
             <!-- Title Updated -->
-            <h1 class=" mb-2 font-bold tracking-wider relative z-10">
-            We Saw You Before You Saw Us
-            </h1>
-            <!-- Subtitle Added -->
-            <p class="text-sm  opacity-80 mb-6 relative z-10">
-            The dark web does not hide from us.
-            </p>
+            <div class="section">
+              <div class="stack title" style="--stacks: 3;">
+                <span style="--index: 0;">We Saw You Before You Saw Us</span>
+                <span style="--index: 1;">We Saw You Before You Saw Us</span>
+                <span style="--index: 2;">We Saw You Before You Saw Us</span>
+              </div>
+              <p class="subtitle">The dark web does not hide from us.</p>
             </div>
-            <!-- Search & Filter Area -->
-            <div class="w-full max-w-4xl p-4 mb-6 synthwave-container-bg synthwave-border-accent rounded-lg synthwave-shadow-accent backdrop-blur-sm relative z-10">
-            <!-- Search Input & Button -->
-            <div class="flex flex-col sm:flex-row items-center space-y-3 sm:space-y-0 sm:space-x-3">
-            <input type="text" id="search-input" placeholder="Search the Grid..." class="flex-grow p-2 bg-purple-900 bg-opacity-70 border synthwave-border-subtle synthwave-accent-cyan focus:outline-none focus:border-pink-500 focus:synthwave-shadow-accent rounded w-full placeholder-purple-400 placeholder-opacity-60">
-            <button id="search-button" class="px-4 py-2 border synthwave-border-accent synthwave-accent-pink rounded synthwave-hover-bg hover:synthwave-shadow-accent transition-all duration-200 w-full sm:w-auto whitespace-nowrap">
-            <i class="fas fa-search"></i> Scan
-            </button>
+          
+            <div class="search-container">
+              <div class="search-row">
+                <input type="text" id="search-input" placeholder="Search the Grid..." class="search-input" />
+                <button id="search-button" class="search-button">
+                  <i class="fas fa-search"></i> Scan
+                </button>
+              </div>
+          
+              <div class="field-toggle">
+                <span class="toggle-label">Scan using:</span>
+                <div id="field-buttons-container" class="field-buttons">
+                  <button data-field="name" class="field-button">Name <i class="fas fa-check icon"></i></button>
+                  <button data-field="email" class="field-button">Email <i class="fas fa-check icon"></i></button>
+                  <button data-field="username" class="field-button">Username <i class="fas fa-check icon"></i></button>
+                  <button data-field="domain" class="field-button">Domain <i class="fas fa-check icon"></i></button>
+                  <button data-field="phone" class="field-button">Phone <i class="fas fa-check icon"></i></button>
+                  <button data-field="Id Number" class="field-button">ID Number <i class="fas fa-check icon"></i></button>
+                  <button data-field="country" class="field-button">Country <i class="fas fa-check icon"></i></button>
+                </div>
+                <span class="field-count">( <span id="selected-field-count">0</span>/<span id="total-field-count">7</span> fields )</span>
+              </div>
             </div>
-        
-            <!-- Field Toggles Area -->
-            <div class="mt-4 pt-3 border-t border-purple-800 border-opacity-50">
-            <span class="mr-3 synthwave-text text-sm opacity-80">Scan using:</span>
-            <!-- Container for buttons - JS will add buttons here -->
-            <div id="field-buttons-container" class="inline-flex flex-wrap gap-2 mt-2 sm:mt-0"><button data-field="name" class="field-button px-3 py-1 border rounded-md text-xs transition-all duration-200 flex items-center space-x-1.5"><span>Name</span><i class="fas fa-check text-xs" style="display: none;"></i></button><button data-field="email" class="field-button px-3 py-1 border rounded-md text-xs transition-all duration-200 flex items-center space-x-1.5"><span>Email</span><i class="fas fa-check text-xs" style="display: none;"></i></button><button data-field="username" class="field-button px-3 py-1 border rounded-md text-xs transition-all duration-200 flex items-center space-x-1.5"><span>Username</span><i class="fas fa-check text-xs" style="display: none;"></i></button><button data-field="domain" class="field-button px-3 py-1 border rounded-md text-xs transition-all duration-200 flex items-center space-x-1.5"><span>Domain</span><i class="fas fa-check text-xs" style="display: none;"></i></button><button data-field="phone" class="field-button px-3 py-1 border rounded-md text-xs transition-all duration-200 flex items-center space-x-1.5"><span>Phone</span><i class="fas fa-check text-xs" style="display: none;"></i></button><button data-field="Id Number" class="field-button px-3 py-1 border rounded-md text-xs transition-all duration-200 flex items-center space-x-1.5"><span> Id  Number</span><i class="fas fa-check text-xs" style="display: none;"></i></button><button data-field="country" class="field-button px-3 py-1 border rounded-md text-xs transition-all duration-200 flex items-center space-x-1.5"><span>Country</span><i class="fas fa-check text-xs" style="display: none;"></i></button></div>
-            <span class="ml-1 sm:ml-4 text-xs synthwave-text opacity-70">
-            (<span id="selected-field-count">0</span>/<span id="total-field-count">7</span> fields)
-            </span>
-            </div>
-            </div>
-        
             <!-- Status Messages
             <div id="loading-indicator" class="text-center p-4 synthwave-accent-cyan animate-pulse hidden-initially w-full max-w-5xl relative z-10">
             <i class="fas fa-sync fa-spin mr-2"></i> Accessing Data Stream...
