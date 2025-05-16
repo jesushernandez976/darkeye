@@ -417,34 +417,60 @@ document.addEventListener('DOMContentLoaded', () => {
 
 const hoverSound = new Audio('./assets/audio/Hover.mp3');
 hoverSound.volume = 0.3;
+
 const clickSound = new Audio('./assets/audio/Click.mp3');
 clickSound.volume = 0.5;
-const navLinks = document.querySelectorAll('.nav-link');
+
 const hoverSound2 = new Audio('./assets/audio/hover 2.mp3');
 hoverSound2.volume = 0.5;
 
-// Add hover sound
-document.getElementById('sound').addEventListener('mouseenter', function () {
-    hoverSound2.play();
+const allSounds = [hoverSound, clickSound, hoverSound2];
+
+let soundMuted = false;
+
+document.querySelector('.toggle-checkbox').addEventListener('change', function (e) {
+    soundMuted = e.target.checked;
+
+    allSounds.forEach(sound => {
+        sound.muted = soundMuted;
+    });
+
+    console.log(soundMuted ? "🔇 Sounds Muted" : "🔊 Sounds Unmuted");
 });
 
-// // Add click sound
-// document.getElementById('sound').addEventListener('click', function() {
-//     clickSound.play();
-// });
+function playSound(audio) {
+    if (!soundMuted) {
+        audio.currentTime = 0;
+        audio.play();
+    }
+}
+
+document.getElementById('sound').addEventListener('mouseenter', function () {
+    playSound(hoverSound2);
+});
+
+document.getElementById('sound').addEventListener('click', function () {
+    playSound(clickSound);
+});
+
+const bodyContainer = document.querySelector('.body-container');
+if (bodyContainer) {
+    bodyContainer.addEventListener('mouseenter', () => {
+        playSound(hoverSound2);
+    });
+}
+
+const navLinks = document.querySelectorAll('.nav-link');
 
 navLinks.forEach(link => {
     link.addEventListener('mouseenter', () => {
-        // Rewind to start in case it's still playing
-        hoverSound2.currentTime = 0;
-        hoverSound2.play();
+        playSound(hoverSound2);
     });
 });
 
 navLinks.forEach(link => {
     link.addEventListener('click', () => {
-        clickSound.currentTime = 0;
-        clickSound.play();
+        playSound(clickSound);
     });
 });
 
@@ -508,16 +534,15 @@ function toggleAlarms(isOn) {
 function startFlicker() {
   flickerInterval = setInterval(() => {
     redLights.forEach(light => {
-      // Random intensity between 2 and 8
       light.intensity = Math.random() * 6 + 2;
     });
-  }, 100); // Flicker every 100ms
+  }, 100); 
 }
 
 function stopFlicker() {
   clearInterval(flickerInterval);
   redLights.forEach(light => {
-    light.intensity = 5; // reset intensity
+    light.intensity = 5; 
   });
 }
 

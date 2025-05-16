@@ -46,19 +46,34 @@
 
 <div class="container">
 
+
+<label>
+  <input class="toggle-checkbox" type="checkbox">
+  <div class="toggle-slot" id="sound">
+    <div class="sun-icon-wrapper">
+      <div class="iconify sun-icon" data-icon="feather-sun" data-inline="false"></div>
+    </div>
+    <div class="toggle-button"></div>
+    <div class="moon-icon-wrapper">
+      <div class="iconify moon-icon" data-icon="feather-moon" data-inline="false"></div>
+    </div>
+  </div>
+</label>
+
+
   <header class="custom-header p-1">
     <div class="header-container">
       <div class="d-flex flex-wrap align-items-center w-100 justify-content-between">
 
-        <!-- Logo -->
+        
         <ul class="nav nav-links me-4">
           <li><a href="index.html" class="nav-link fs-6 fw-bold">Darkeye.io</a></li>
         </ul>
 
-        <!-- Hamburger Button (Hidden on Desktop) -->
+        
         <button class="hamburger d-md-none" id="hamburgerBtn" aria-label="Toggle navigation">
-          <span class="hamburger-icon">&#9776;</span> <!-- ☰ -->
-          <span class="close-icon">&times;</span> <!-- ✕ -->
+          <span class="hamburger-icon">&#9776;</span> 
+          <span class="close-icon">&times;</span> 
         </button>
 
         <!-- Full Nav Menu -->
@@ -93,8 +108,8 @@
 
 
 
-  <div class="body-container p-4 md:p-8 flex flex-col items-center" id='sound'>
-    <div>
+  <div class="body-container p-4 md:p-8 flex flex-col items-center" id="sound" >
+    <div >
       <!-- Title Updated -->
       <div class="section">
         <div class="stack title" style="--stacks: 3;">
@@ -105,7 +120,7 @@
         <p class="subtitle">The dark web does not hide from us.</p>
       </div>
 
-      <div class="search-container">
+      <div class="search-container" >
         <div class="search-row">
           <input type="text" id="search-input" placeholder="Search the Grid..." class="search-input" />
           <button id="search-button" class="search-button">
