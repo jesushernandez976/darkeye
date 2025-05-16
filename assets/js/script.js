@@ -185,11 +185,12 @@ window.addEventListener('resize', () => {
 });
 
 
+
 document.addEventListener('DOMContentLoaded', () => {
 
     const availableFields = [
         'name', 'email', 'username', 'domain', 'phone',
-        'Id Number', 'country','password','telegram User','Telegram Id','Ip Address','Metmask Wallet','Vpn Domain','Ftp Domain','Steam Username','steam'
+        'Id Number', 'country', 'password', 'telegram User', 'Telegram Id', 'Ip Address', 'Metamask Wallet', 'Vpn Domain', 'Ftp Domain', 'Steam Username', 'steam'
     ];
 
     // --- State ---
@@ -400,12 +401,129 @@ document.addEventListener('DOMContentLoaded', () => {
     fieldButtonsContainer.addEventListener('click', (event) => {
         const button = event.target.closest('.field-button');
         if (button && button.dataset.field) {
+            // Play click sound
+            clickSound.currentTime = 0;
+            clickSound.play();
+
             toggleField(button.dataset.field, button);
         }
     });
+
 
     // --- Initial Setup ---
     renderFieldButtons(); // Create the buttons
 
 });
+
+const hoverSound = new Audio('./assets/audio/Hover.mp3');
+hoverSound.volume = 0.3;
+const clickSound = new Audio('./assets/audio/Click.mp3');
+clickSound.volume = 0.5;
+const navLinks = document.querySelectorAll('.nav-link');
+const hoverSound2 = new Audio('./assets/audio/hover 2.mp3');
+hoverSound2.volume = 0.5;
+
+// Add hover sound
+document.getElementById('sound').addEventListener('mouseenter', function () {
+    hoverSound2.play();
+});
+
+// // Add click sound
+// document.getElementById('sound').addEventListener('click', function() {
+//     clickSound.play();
+// });
+
+navLinks.forEach(link => {
+    link.addEventListener('mouseenter', () => {
+        // Rewind to start in case it's still playing
+        hoverSound2.currentTime = 0;
+        hoverSound2.play();
+    });
+});
+
+navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+        clickSound.currentTime = 0;
+        clickSound.play();
+    });
+});
+
+
+const hamburgerBtn = document.getElementById('hamburgerBtn');
+const navWrapper = document.getElementById('navWrapper');
+
+hamburgerBtn.addEventListener('click', () => {
+    navWrapper.classList.toggle('active');
+    hamburgerBtn.classList.toggle('active');
+});
+
+document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+        navWrapper.classList.remove('active');
+        hamburgerBtn.classList.remove('active');
+    });
+});
+
+let alarmsOn = false;
+let redLights = [];
+let flickerInterval = null;
+
+function createAlarmLights(count = 20) {
+  for (let i = 0; i < count; i++) {
+    const light = new THREE.PointLight(0xff0000, 10, 150);
+
+    const x = (Math.random() - 0.5) * 20;
+    const y = Math.random() * 5 + 1;
+    const z = (Math.random() - 0.5) * 20;
+
+    light.position.set(x, y, z);
+    light.visible = false;
+
+    scene.add(light);
+    redLights.push(light);
+  }
+}
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "1") {
+    alarmsOn = !alarmsOn;
+    toggleAlarms(alarmsOn);
+  }
+});
+
+function toggleAlarms(isOn) {
+  console.log(isOn ? "🚨 Alarms ON" : "🔕 Alarms OFF");
+
+  redLights.forEach(light => {
+    light.visible = isOn;
+  });
+
+  if (isOn) {
+    startFlicker();
+  } else {
+    stopFlicker();
+  }
+}
+
+function startFlicker() {
+  flickerInterval = setInterval(() => {
+    redLights.forEach(light => {
+      // Random intensity between 2 and 8
+      light.intensity = Math.random() * 6 + 2;
+    });
+  }, 100); // Flicker every 100ms
+}
+
+function stopFlicker() {
+  clearInterval(flickerInterval);
+  redLights.forEach(light => {
+    light.intensity = 5; // reset intensity
+  });
+}
+
+createAlarmLights();
+
+
+
+
 
