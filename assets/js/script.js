@@ -18,11 +18,10 @@ camera.position.set(-1, 1.7, 4.3);
 
 
 
-// Renderer
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setAnimationLoop(() => {
-    const delta = Math.min(0.05, clock.getDelta()); // Smooth delta
+    const delta = Math.min(0.05, clock.getDelta()); 
     if (mixer) mixer.update(delta);
     controls.update();
     renderer.render(scene, camera);
@@ -33,54 +32,48 @@ renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
 // Lighting
-const ambientLight = new THREE.AmbientLight(0x00f0ff, 0.08); // Neon blue tint
+const ambientLight = new THREE.AmbientLight(0x00f0ff, 0.08); 
 scene.add(ambientLight);
 
 
 
-// Glow material with emissive properties for shine
 const glowMaterial = new THREE.MeshStandardMaterial({
-    color: 0x00f0ff,      // Color of the glow
-    emissive: 0x00f0ff,   // Makes the object glow
-    emissiveIntensity: 10, // Increase the emissive intensity for a stronger shine
+    color: 0x00f0ff,     
+    emissive: 0x00f0ff,   
+    emissiveIntensity: 10, 
     transparent: true,
-    opacity: 0.5,         // Adjust opacity for transparency effect
-    roughness: 0.2,       // Control roughness for smooth surface
-    metalness: 0.5        // Optional: give it a slightly metallic look
+    opacity: 0.5,         
+    roughness: 0.2,       
+    metalness: 0.5        
 });
 
-// Create the glowing base circle
-const glowBase = new THREE.CircleGeometry(0.5, 32); // You can increase size for a larger glow
+const glowBase = new THREE.CircleGeometry(0.5, 32);
 const glowMesh = new THREE.Mesh(glowBase, glowMaterial);
-glowMesh.rotation.x = -Math.PI / 2; // Rotate it flat
-glowMesh.position.y = -0.2;         // Position it slightly below the model
+glowMesh.rotation.x = -Math.PI / 2; 
+glowMesh.position.y = -0.2;         
 
 scene.add(glowMesh);
 
-// Optional: Add a Point Light for extra shine
-const glowLight = new THREE.PointLight(0x00f0ff, 3, 10, 2); // Intensity, distance, and decay
-glowLight.position.set(0, -0.2, 0); // Position the light under the model
+const glowLight = new THREE.PointLight(0x00f0ff, 3, 10, 2); 
+glowLight.position.set(0, -0.2, 0); 
 scene.add(glowLight);
 
-// Inside your animate() function
 
 
-// Controls
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
-controls.dampingFactor = 0.05; // Lower for smoother damping
-controls.rotateSpeed = 0.4;    // Lower to slow down rotation
-controls.zoomSpeed = 0.2;      // Optional: slow down zoom
-controls.panSpeed = 0.2;       // Optional: slow down panning
-controls.enableZoom = false;   // Optional: disable zoom if undesired
-controls.enablePan = false;    // Optional: disable panning
+controls.dampingFactor = 0.05; 
+controls.rotateSpeed = 0.4;   
+controls.zoomSpeed = 0.2;      
+controls.panSpeed = 0.2;       
+controls.enableZoom = false;   
+controls.enablePan = false;    
 
 
 let mixer;
-let modelGroup = new THREE.Group(); // Group to hold model
+let modelGroup = new THREE.Group(); 
 scene.add(modelGroup);
 
-// Loading screen elements
 const loadingScreen = document.getElementById('loading-screen');
 const loadingPercentage = document.getElementById('loading-percentage');
 
@@ -90,7 +83,7 @@ loader.load(
     (gltf) => {
         const model = gltf.scene;
         model.scale.set(1, 1, 1);
-        modelGroup.add(model); // Add model to group
+        modelGroup.add(model); 
 
         if (gltf.animations && gltf.animations.length) {
             mixer = new THREE.AnimationMixer(model);
@@ -99,7 +92,6 @@ loader.load(
             });
         }
 
-        // Model fully loaded - hide loading screen and start camera animation
         gsap.to(loadingScreen, {
             opacity: 0,
             duration: 1,
@@ -109,20 +101,17 @@ loader.load(
             }
         });
     },
-    // onProgress
     (xhr) => {
         if (xhr.lengthComputable) {
             const percent = (xhr.loaded / xhr.total) * 100;
             loadingPercentage.textContent = `${Math.round(percent)}%`;
         }
     },
-    // onError
     (error) => {
         console.error('Error loading GLB:', error);
     }
 );
 
-// Camera start position
 camera.position.set(-40, 10, 60);
 camera.lookAt(0, 1.5, 0);
 
@@ -143,10 +132,8 @@ function startCameraAnimation() {
 }
 
 
-// Clock for animation timing
 const clock = new THREE.Clock();
 
-// Animate
 function animate() {
     requestAnimationFrame(animate);
 
@@ -154,20 +141,17 @@ function animate() {
     if (mixer) mixer.update(delta);
 
 
-    modelGroup.rotation.y -= 0.001; // Slow opposite (counterclockwise) rotation
+    modelGroup.rotation.y -= 0.001; 
 
 
 
-    const time = performance.now() * 0.001; // Time in seconds
+    const time = performance.now() * 0.001; 
 
-    // Flicker with random slight spikes occasionally
     const flicker = Math.random() < 0.03 ? Math.random() * 0.5 : 2;
 
-    // Base + flicker using sine for smooth variation + occasional random pulse
     const baseIntensity = 3 + Math.sin(time * 5) * 0.2 + flicker;
     glowLight.intensity = baseIntensity;
 
-    // Optional: also flicker emissive intensity on glowMesh material
     glowMaterial.emissiveIntensity = 8 + Math.sin(time * 5) * 0.5 + flicker;
 
 
@@ -177,7 +161,6 @@ function animate() {
 }
 animate();
 
-// Handle resize
 window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
@@ -193,8 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'Id Number', 'country', 'password', 'telegram User', 'Telegram Id', 'Ip Address', 'Metamask Wallet', 'Vpn Domain', 'Ftp Domain', 'Steam Username', 'steam'
     ];
 
-    // --- State ---
-    let selectedFields = []; // Start with all selected
+    let selectedFields = []; 
     let currentSearchTerm = '';
     let isLoading = false;
 
@@ -221,10 +203,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function renderFieldButtons() {
-        fieldButtonsContainer.innerHTML = ''; // Clear existing
+        fieldButtonsContainer.innerHTML = '';
         availableFields.forEach(field => {
             const button = document.createElement('button');
-            button.dataset.field = field; // Store field name in data attribute
+            button.dataset.field = field; 
             button.className = `field-button px-3 py-1 border rounded-md text-xs transition-all duration-200 flex items-center space-x-1.5`;
 
             const span = document.createElement('span');
@@ -233,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const icon = document.createElement('i');
             icon.className = 'fas fa-check text-xs';
-            icon.style.display = 'none'; // Hide check initially
+            icon.style.display = 'none'; 
             button.appendChild(icon);
 
             if (selectedFields.includes(field)) {
@@ -495,55 +477,55 @@ let redLights = [];
 let flickerInterval = null;
 
 function createAlarmLights(count = 20) {
-  for (let i = 0; i < count; i++) {
-    const light = new THREE.PointLight(0xff0000, 10, 150);
+    for (let i = 0; i < count; i++) {
+        const light = new THREE.PointLight(0xff0000, 10, 150);
 
-    const x = (Math.random() - 0.5) * 20;
-    const y = Math.random() * 5 + 1;
-    const z = (Math.random() - 0.5) * 20;
+        const x = (Math.random() - 0.5) * 20;
+        const y = Math.random() * 5 + 1;
+        const z = (Math.random() - 0.5) * 20;
 
-    light.position.set(x, y, z);
-    light.visible = false;
+        light.position.set(x, y, z);
+        light.visible = false;
 
-    scene.add(light);
-    redLights.push(light);
-  }
+        scene.add(light);
+        redLights.push(light);
+    }
 }
 
 document.addEventListener("keydown", (e) => {
-  if (e.key === "1") {
-    alarmsOn = !alarmsOn;
-    toggleAlarms(alarmsOn);
-  }
+    if (e.key === "1") {
+        alarmsOn = !alarmsOn;
+        toggleAlarms(alarmsOn);
+    }
 });
 
 function toggleAlarms(isOn) {
-  console.log(isOn ? "🚨 Alarms ON" : "🔕 Alarms OFF");
+    console.log(isOn ? "🚨 Alarms ON" : "🔕 Alarms OFF");
 
-  redLights.forEach(light => {
-    light.visible = isOn;
-  });
+    redLights.forEach(light => {
+        light.visible = isOn;
+    });
 
-  if (isOn) {
-    startFlicker();
-  } else {
-    stopFlicker();
-  }
+    if (isOn) {
+        startFlicker();
+    } else {
+        stopFlicker();
+    }
 }
 
 function startFlicker() {
-  flickerInterval = setInterval(() => {
-    redLights.forEach(light => {
-      light.intensity = Math.random() * 6 + 2;
-    });
-  }, 100); 
+    flickerInterval = setInterval(() => {
+        redLights.forEach(light => {
+            light.intensity = Math.random() * 6 + 2;
+        });
+    }, 100);
 }
 
 function stopFlicker() {
-  clearInterval(flickerInterval);
-  redLights.forEach(light => {
-    light.intensity = 5; 
-  });
+    clearInterval(flickerInterval);
+    redLights.forEach(light => {
+        light.intensity = 5;
+    });
 }
 
 createAlarmLights();
